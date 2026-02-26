@@ -9,11 +9,18 @@
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(135deg,#0b0b0b,#1a1a1a);
+  background:linear-gradient(135deg,#0b0b0b,#151515);
   color:#fff;
+  animation: goldPulse 8s ease-in-out infinite;
 }
 
-/* Header */
+/* Auto dark–gold pulse */
+@keyframes goldPulse{
+  0%{background:linear-gradient(135deg,#0b0b0b,#151515)}
+  50%{background:linear-gradient(135deg,#111,#1f1a0a)}
+  100%{background:linear-gradient(135deg,#0b0b0b,#151515)}
+}
+
 header{
   padding:60px 20px;
   text-align:center;
@@ -21,32 +28,28 @@ header{
 header h1{
   font-size:2.5rem;
   color:#d4af37;
-  text-shadow:0 0 15px rgba(212,175,55,0.4);
-}
-header p{opacity:0.85}
-
-/* Sections */
-.section{
-  padding:40px 20px;
-  max-width:900px;
-  margin:auto;
+  text-shadow:0 0 15px rgba(212,175,55,.4);
 }
 
-/* Card with glow */
+.section{padding:40px 20px;max-width:900px;margin:auto}
+
+/* Card glow */
 .card{
-  background:rgba(255,255,255,0.06);
-  backdrop-filter: blur(10px);
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(10px);
   padding:25px;
   border-radius:18px;
   margin-bottom:30px;
-  box-shadow:
-    0 0 25px rgba(212,175,55,0.15),
-    inset 0 0 20px rgba(212,175,55,0.05);
+  animation: cardGlow 6s infinite;
+}
+@keyframes cardGlow{
+  0%,100%{box-shadow:0 0 20px rgba(212,175,55,.15)}
+  50%{box-shadow:0 0 35px rgba(212,175,55,.35)}
 }
 
 h2{color:#d4af37}
 
-/* Form styling */
+/* Inputs */
 input,textarea,select,button{
   width:100%;
   padding:12px;
@@ -56,71 +59,70 @@ input,textarea,select,button{
   font-size:1rem;
 }
 input,textarea,select{
-  background:rgba(0,0,0,0.6);
-  border:1px solid rgba(212,175,55,0.3);
+  background:rgba(0,0,0,.6);
+  border:1px solid rgba(212,175,55,.3);
   color:#fff;
-  transition:0.3s;
 }
-input:focus,textarea:focus,select:focus{
-  outline:none;
-  border-color:#d4af37;
-  box-shadow:0 0 15px rgba(212,175,55,0.6);
+
+/* Error animation */
+@keyframes shake{
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}
+  50%{transform:translateX(5px)}
+  75%{transform:translateX(-5px)}
+  100%{transform:translateX(0)}
 }
+.error{
+  border:1px solid #ff4d4d!important;
+  box-shadow:0 0 12px rgba(255,77,77,.8);
+  animation:shake .3s;
+}
+
+/* Submit button */
 button{
   background:linear-gradient(135deg,#d4af37,#f6e27a);
-  color:#000;
   font-weight:700;
   cursor:pointer;
-  box-shadow:0 0 20px rgba(212,175,55,0.6);
 }
-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 30px rgba(212,175,55,0.9);
+
+/* WhatsApp glow */
+@keyframes waPulse{
+  0%{box-shadow:0 0 0 rgba(37,211,102,0)}
+  50%{box-shadow:0 0 30px rgba(37,211,102,.9)}
+  100%{box-shadow:0 0 0 rgba(37,211,102,0)}
+}
+.waGlow{
+  background:linear-gradient(135deg,#25D366,#128C7E)!important;
+  color:#fff!important;
+  animation:waPulse 1.2s infinite;
 }
 
 /* Floating buttons */
-#musicBtn{
+#musicBtn,#callBtn,.lang-btn{
   position:fixed;
-  bottom:20px;
-  right:20px;
-  width:55px;
-  height:55px;
+  width:55px;height:55px;
   border-radius:50%;
   border:none;
-  background:#d4af37;
-  font-size:20px;
   cursor:pointer;
-  box-shadow:0 0 25px rgba(212,175,55,0.6);
-  z-index:9999;
-}
-.lang-btn{
-  position:fixed;
-  top:20px;
-  left:20px;
-  background:#d4af37;
-  color:#000;
-  padding:8px 16px;
-  border:none;
-  border-radius:20px;
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:0 0 20px rgba(212,175,55,0.4);
   z-index:9999;
 }
 
-/* Map */
-iframe.map{
-  width:100%;
-  height:300px;
-  border:none;
-  border-radius:15px;
+#musicBtn{bottom:20px;right:20px;background:#d4af37}
+#callBtn{bottom:90px;right:20px;background:#25D366;color:#fff}
+.lang-btn{
+  top:20px;left:20px;
+  width:42px;height:42px;
+  background:linear-gradient(135deg,#d4af37,#f6e27a);
 }
+
+/* Map */
+iframe.map{width:100%;height:300px;border:none;border-radius:15px}
 </style>
 </head>
 
 <body>
 
-<button class="lang-btn" onclick="toggleLang()">हिंदी</button>
+<button class="lang-btn" onclick="toggleLang()">🌐</button>
 
 <header>
   <h1 id="title">Subh Marriage Garden</h1>
@@ -129,113 +131,89 @@ iframe.map{
 
 <div class="section">
 
-  <div class="card">
-    <h2 id="aboutTitle">About Us</h2>
-    <p id="aboutText">
-      Subh Marriage Garden is a modern, elegant venue for weddings,
-      receptions, engagements and private celebrations.
-    </p>
-  </div>
+<div class="card">
+<h2 id="aboutTitle">About Us</h2>
+<p id="aboutText">
+Subh Marriage Garden is a modern, elegant venue for weddings and events.
+</p>
+<p id="contactText" style="color:#f6e27a;font-weight:600">
+📞 Contact: +91 78794 04509, 9526743880
+</p>
+</div>
 
-  <div class="card">
-    <h2 id="formTitle">Booking / Enquiry</h2>
+<div class="card">
+<h2 id="formTitle">Booking / Enquiry</h2>
 
-    <form onsubmit="sendWhatsApp();return false;">
-      <input id="name" placeholder="Your Name" required>
-      <input id="phone" placeholder="Mobile Number" required>
-      <input id="date" type="date" required>
+<form onsubmit="sendWhatsApp();return false;">
+<input id="name" placeholder="Your Name">
+<input id="phone" placeholder="Mobile Number">
+<input id="date" type="date">
+<select id="event">
+<option value="">Select Event</option>
+<option>Wedding</option>
+<option>Reception</option>
+<option>Engagement</option>
+<option>Birthday Party</option>
+</select>
+<textarea id="msg" placeholder="Event Details"></textarea>
+<button id="sendBtn">Send Enquiry</button>
+</form>
+</div>
 
-      <select id="event" required>
-        <option value="">Select Event Type</option>
-        <option>Wedding</option>
-        <option>Reception</option>
-        <option>Engagement</option>
-        <option>Birthday Party</option>
-        <option>Other Event</option>
-      </select>
-
-      <textarea id="msg" placeholder="Event Details"></textarea>
-      <button type="submit" id="sendBtn">Send Enquiry</button>
-    </form>
-  </div>
-
-  <!-- MAP (Language based) -->
-  <div class="card">
-    <h2 id="mapTitle">Location</h2>
-
-    <iframe id="mapEn" class="map"
-      src="https://maps.google.com/maps?q=Subh%20Marriage%20Garden&hl=en&z=15&output=embed">
-    </iframe>
-
-    <iframe id="mapHi" class="map" style="display:none"
-      src="https://maps.google.com/maps?q=Subh%20Marriage%20Garden&hl=hi&z=15&output=embed">
-    </iframe>
-  </div>
+<div class="card">
+<h2 id="mapTitle">Location</h2>
+<iframe id="mapEn" class="map"
+src="https://maps.google.com/maps?q=Subh%20Marriage%20Garden&hl=en&z=15&output=embed"></iframe>
+<iframe id="mapHi" class="map" style="display:none"
+src="https://maps.google.com/maps?q=Subh%20Marriage%20Garden&hl=hi&z=15&output=embed"></iframe>
+</div>
 
 </div>
 
-<!-- Background Music (soft / ambient feel) -->
 <iframe id="bgMusic"
-src="https://www.youtube.com/embed/lUtOK46b9qI?autoplay=1&loop=1&playlist=lUtOK46b9qI&controls=0&mute=0"
-allow="autoplay"
-style="display:none">
-</iframe>
+src="https://www.youtube.com/embed/lUtOK46b9qI?autoplay=1&loop=1&playlist=lUtOK46b9qI&controls=0"
+allow="autoplay" style="display:none"></iframe>
 
 <button id="musicBtn" onclick="toggleMusic()">🎵</button>
+<button id="callBtn" onclick="location.href='tel:+917879404509'">📞</button>
 
 <script>
-/* Music toggle */
 let musicOn=true;
 function toggleMusic(){
-  let m=document.getElementById("bgMusic");
-  if(musicOn){
-    m.src="";
-  }else{
-    m.src="https://www.youtube.com/embed/lUtOK46b9qI?autoplay=1&loop=1&playlist=lUtOK46b9qI&controls=0&mute=0";
-  }
-  musicOn=!musicOn;
+bgMusic.src=musicOn?"":"https://www.youtube.com/embed/lUtOK46b9qI?autoplay=1&loop=1&playlist=lUtOK46b9qI&controls=0";
+musicOn=!musicOn;
 }
 
-/* WhatsApp Enquiry */
 function sendWhatsApp(){
-let n=name.value;
-let p=phone.value;
-let d=date.value;
-let e=event.value;
-let m=msg.value;
-
+let n=name, p=phone, d=date, e=event;
+[n,p,d,e].forEach(x=>x.classList.remove("error"));
+if(!n.value||!p.value||!d.value||!e.value){
+[n,p,d,e].forEach(x=>{if(!x.value)x.classList.add("error")});
+return;
+}
+sendBtn.classList.add("waGlow");
 let url=`https://wa.me/917879404509?text=
-📍 Subh Marriage Garden%0A
-👤 Name: ${n}%0A
-📞 Phone: ${p}%0A
-📅 Event Date: ${d}%0A
-🎉 Event: ${e}%0A
-📝 Details: ${m}`;
-
-window.open(url,'_blank');
+👤 Name: ${encodeURIComponent(n.value)}%0A
+📞 Phone: ${encodeURIComponent(p.value)}%0A
+📅 Date: ${encodeURIComponent(d.value)}%0A
+🎉 Event: ${encodeURIComponent(e.value)}%0A
+📝 ${encodeURIComponent(msg.value)}`;
+window.open(url,"_blank");
 }
 
-/* Language toggle + Map language */
 let hindi=false;
 function toggleLang(){
 hindi=!hindi;
-document.querySelector('.lang-btn').innerText=hindi?"English":"हिंदी";
-
 title.innerText=hindi?"शुभ मैरिज गार्डन":"Subh Marriage Garden";
-tagline.innerText=hindi?
-"शादियों और भव्य आयोजनों के लिए प्रीमियम स्थल":
-"A Premium Venue for Weddings & Grand Events";
+tagline.innerText=hindi?"शादियों के लिए प्रीमियम स्थल":"A Premium Venue for Weddings";
 aboutTitle.innerText=hindi?"हमारे बारे में":"About Us";
-aboutText.innerText=hindi?
-"शुभ मैरिज गार्डन शादियों और आयोजनों के लिए एक भव्य स्थल है।":
-"Subh Marriage Garden is a modern, elegant venue for weddings.";
-formTitle.innerText=hindi?"बुकिंग / पूछताछ":"Booking / Enquiry";
-sendBtn.innerText=hindi?"WhatsApp पर भेजें":"Send Enquiry";
-mapTitle.innerText=hindi?"लोकेशन":"Location";
-
-/* Map switch */
-mapEn.style.display = hindi ? "none" : "block";
-mapHi.style.display = hindi ? "block" : "none";
+aboutText.innerText=hindi?"शुभ मैरिज गार्डन एक भव्य आयोजन स्थल है।":
+"Subh Marriage Garden is a modern, elegant venue.";
+contactText.innerText=hindi?
+"📞 संपर्क: +91 78794 04509, 9526743880":
+"📞 Contact: +91 78794 04509, 9526743880";
+mapEn.style.display=hindi?"none":"block";
+mapHi.style.display=hindi?"block":"none";
 }
 </script>
 
