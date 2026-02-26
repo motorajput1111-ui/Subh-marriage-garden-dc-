@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Subh Marriage Garden</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#0b0b0b,#1a1a1a);
+  color:#fff;
+}
+header{
+  padding:60px 20px;
+  text-align:center;
+}
+header h1{
+  font-size:2.5rem;
+  color:#d4af37;
+}
+header p{opacity:0.85}
+
+.section{
+  padding:40px 20px;
+  max-width:900px;
+  margin:auto;
+}
+.card{
+  background:rgba(255,255,255,0.05);
+  padding:25px;
+  border-radius:18px;
+  box-shadow:0 0 25px rgba(212,175,55,0.1);
+  margin-bottom:30px;
+}
+h2{color:#d4af37}
+
+input,textarea,select,button{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:10px;
+  border:none;
+  font-size:1rem;
+}
+input,textarea,select{
+  background:#111;
+  color:#fff;
+}
+button{
+  background:#d4af37;
+  color:#000;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* Floating Buttons */
+#musicBtn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#d4af37;
+  color:#000;
+  padding:12px 18px;
+  border-radius:50px;
+  font-weight:700;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 0 25px rgba(212,175,55,0.6);
+  z-index:9999;
+}
+.lang-btn{
+  position:fixed;
+  top:20px;
+  left:20px;
+  background:#d4af37;
+  color:#000;
+  padding:8px 16px;
+  border:none;
+  border-radius:20px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 0 20px rgba(212,175,55,0.4);
+  z-index:9999;
+}
+
+iframe.map{
+  width:100%;
+  height:300px;
+  border:none;
+  border-radius:15px;
+}
+</style>
+</head>
+
+<body>
+
+<button class="lang-btn" onclick="toggleLang()">हिंदी</button>
+
+<header>
+  <h1 id="title">Subh Marriage Garden</h1>
+  <p id="tagline">A Premium Venue for Weddings & Grand Events</p>
+</header>
+
+<div class="section">
+
+<div class="card">
+<h2 id="aboutTitle">About Us</h2>
+<p id="aboutText">
+Subh Marriage Garden is a modern, elegant venue for weddings,
+receptions, engagements and private celebrations.
+</p>
+</div>
+
+<div class="card">
+<h2 id="formTitle">Booking / Enquiry</h2>
+
+<form onsubmit="sendWhatsApp();return false;">
+  <input id="name" placeholder="Your Name" required>
+  <input id="phone" placeholder="Mobile Number" required>
+  <input id="date" type="date" required>
+
+  <select id="event" required>
+    <option value="">Select Event Type</option>
+    <option>Wedding</option>
+    <option>Reception</option>
+    <option>Engagement</option>
+    <option>Birthday Party</option>
+    <option>Other Event</option>
+  </select>
+
+  <textarea id="msg" placeholder="Event Details"></textarea>
+  <button type="submit" id="sendBtn">Send Enquiry</button>
+</form>
+</div>
+
+<div class="card">
+<h2 id="mapTitle">Location</h2>
+<iframe class="map"
+src="https://maps.google.com/maps?q=Subh%20Marriage%20Garden&t=&z=15&ie=UTF8&iwloc=&output=embed">
+</iframe>
+</div>
+
+</div>
+
+<!-- Background Music -->
+<iframe id="bgMusic"
+src="https://www.youtube.com/embed/lUtOK46b9qI?autoplay=1&loop=1&playlist=lUtOK46b9qI&controls=0&mute=0"
+allow="autoplay"
+style="display:none;">
+</iframe>
+
+<button id="musicBtn" onclick="toggleMusic()">🔊 Music</button>
+
+<script>
+let musicOn=true;
+function toggleMusic(){
+  let m=document.getElementById("bgMusic");
+  if(musicOn){
+    m.src="";
+    musicBtn.innerText="🔇 Music";
+  }else{
+    m.src="https://www.youtube.com/embed/lUtOK46b9qI?autoplay=1&loop=1&playlist=lUtOK46b9qI&controls=0&mute=0";
+    musicBtn.innerText="🔊 Music";
+  }
+  musicOn=!musicOn;
+}
+
+function sendWhatsApp(){
+let n=name.value;
+let p=phone.value;
+let d=date.value;
+let e=event.value;
+let m=msg.value;
+
+let url=`https://wa.me/917879404509?text=
+📍 Subh Marriage Garden%0A
+👤 Name: ${n}%0A
+📞 Phone: ${p}%0A
+📅 Event Date: ${d}%0A
+🎉 Event: ${e}%0A
+📝 Details: ${m}`;
+
+window.open(url,'_blank');
+}
+
+let hindi=false;
+function toggleLang(){
+hindi=!hindi;
+document.querySelector('.lang-btn').innerText=hindi?"English":"हिंदी";
+
+title.innerText=hindi?"शुभ मैरिज गार्डन":"Subh Marriage Garden";
+tagline.innerText=hindi?
+"शादियों और भव्य आयोजनों के लिए प्रीमियम स्थल":
+"A Premium Venue for Weddings & Grand Events";
+aboutTitle.innerText=hindi?"हमारे बारे में":"About Us";
+aboutText.innerText=hindi?
+"शुभ मैरिज गार्डन शादियों और आयोजनों के लिए एक भव्य स्थल है।":
+"Subh Marriage Garden is a modern, elegant venue for weddings.";
+formTitle.innerText=hindi?"बुकिंग / पूछताछ":"Booking / Enquiry";
+sendBtn.innerText=hindi?"WhatsApp पर भेजें":"Send Enquiry";
+mapTitle.innerText=hindi?"लोकेशन":"Location";
+}
+</script>
+
+</body>
+</html>
