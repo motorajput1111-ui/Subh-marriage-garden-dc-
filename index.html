@@ -185,21 +185,39 @@ musicOn=!musicOn;
 }
 
 function sendWhatsApp(){
-let n=name, p=phone, d=date, e=event;
-[n,p,d,e].forEach(x=>x.classList.remove("error"));
-if(!n.value||!p.value||!d.value||!e.value){
-[n,p,d,e].forEach(x=>{if(!x.value)x.classList.add("error")});
-return;
-}
-sendBtn.classList.add("waGlow");
-let url=`https://wa.me/917879404509?text=
-👤 Name: ${encodeURIComponent(n.value)}%0A
-📞 Phone: ${encodeURIComponent(p.value)}%0A
-📅 Date: ${encodeURIComponent(d.value)}%0A
-🎉 Event: ${encodeURIComponent(e.value)}%0A
-📝 ${encodeURIComponent(msg.value)}`;
-window.open(url,"_blank");
-}
+
+  let nameEl  = document.getElementById("name");
+  let phoneEl = document.getElementById("phone");
+  let dateEl  = document.getElementById("date");
+  let eventEl = document.getElementById("event");
+  let msgEl   = document.getElementById("msg");
+
+  let fields = [nameEl, phoneEl, dateEl, eventEl];
+  let valid = true;
+
+  fields.forEach(f=>{
+    f.classList.remove("error");
+    if(!f.value){
+      f.classList.add("error");
+      valid = false;
+    }
+  });
+
+  if(!valid) return;
+
+  // WhatsApp green glow
+  document.getElementById("sendBtn").classList.add("waGlow");
+
+  let url = `https://wa.me/917879404509?text=
+📍 Subh Marriage Garden%0A
+👤 Name: ${encodeURIComponent(nameEl.value)}%0A
+📞 Phone: ${encodeURIComponent(phoneEl.value)}%0A
+📅 Event Date: ${encodeURIComponent(dateEl.value)}%0A
+🎉 Event: ${encodeURIComponent(eventEl.value)}%0A
+📝 Details: ${encodeURIComponent(msgEl.value)}`;
+
+  window.open(url, "_blank");
+  }
 
 let hindi=false;
 function toggleLang(){
