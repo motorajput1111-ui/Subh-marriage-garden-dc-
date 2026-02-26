@@ -30,6 +30,7 @@ header h1{
   color:#d4af37;
   text-shadow:0 0 15px rgba(212,175,55,.4);
 }
+header p{opacity:.85}
 
 .section{padding:40px 20px;max-width:900px;margin:auto}
 
@@ -78,7 +79,7 @@ input,textarea,select{
   animation:shake .3s;
 }
 
-/* Submit button */
+/* Buttons */
 button{
   background:linear-gradient(135deg,#d4af37,#f6e27a);
   font-weight:700;
@@ -106,7 +107,6 @@ button{
   cursor:pointer;
   z-index:9999;
 }
-
 #musicBtn{bottom:20px;right:20px;background:#d4af37}
 #callBtn{bottom:90px;right:20px;background:#25D366;color:#fff}
 .lang-btn{
@@ -117,6 +117,22 @@ button{
 
 /* Map */
 iframe.map{width:100%;height:300px;border:none;border-radius:15px}
+
+/* Footer */
+footer{
+  margin-top:40px;
+  padding:35px 20px;
+  background:linear-gradient(135deg,#0b0b0b,#1a1405);
+  text-align:center;
+  box-shadow:0 -5px 30px rgba(212,175,55,.25);
+}
+footer h3{color:#d4af37;margin-bottom:10px}
+footer p{margin:6px 0;font-size:.95rem;opacity:.9}
+footer .divider{
+  width:80px;height:2px;margin:15px auto;
+  background:linear-gradient(90deg,transparent,#d4af37,transparent);
+}
+footer .copy{font-size:.85rem;opacity:.7}
 </style>
 </head>
 
@@ -130,16 +146,6 @@ iframe.map{width:100%;height:300px;border:none;border-radius:15px}
 </header>
 
 <div class="section">
-
-<div class="card">
-<h2 id="aboutTitle">About Us</h2>
-<p id="aboutText">
-Subh Marriage Garden is a modern, elegant venue for weddings and events.
-</p>
-<p id="contactText" style="color:#f6e27a;font-weight:600">
-📞 Contact: +91 78794 04509, 9526743880
-</p>
-</div>
 
 <div class="card">
 <h2 id="formTitle">Booking / Enquiry</h2>
@@ -170,6 +176,16 @@ src="https://maps.google.com/maps?q=Subh%20Marriage%20Garden&hl=hi&z=15&output=e
 
 </div>
 
+<footer>
+<h3 id="footerTitle">Subh Marriage Garden</h3>
+<p id="footerAbout">A premium venue for weddings, receptions and grand celebrations.</p>
+<div class="divider"></div>
+<p id="footerAddress">📍 India, Madhya Pradesh, Jabalpur, Suhagi</p>
+<p id="footerContact">📞 +91 78794 04509 | 9526743880</p>
+<div class="divider"></div>
+<p class="copy" id="footerCopy">© 2026 Subh Marriage Garden. All Rights Reserved.</p>
+</footer>
+
 <iframe id="bgMusic"
 src="https://www.youtube.com/embed/lUtOK46b9qI?autoplay=1&loop=1&playlist=lUtOK46b9qI&controls=0"
 allow="autoplay" style="display:none"></iframe>
@@ -185,51 +201,53 @@ musicOn=!musicOn;
 }
 
 function sendWhatsApp(){
+let nameEl=document.getElementById("name");
+let phoneEl=document.getElementById("phone");
+let dateEl=document.getElementById("date");
+let eventEl=document.getElementById("event");
+let msgEl=document.getElementById("msg");
 
-  let nameEl  = document.getElementById("name");
-  let phoneEl = document.getElementById("phone");
-  let dateEl  = document.getElementById("date");
-  let eventEl = document.getElementById("event");
-  let msgEl   = document.getElementById("msg");
+let fields=[nameEl,phoneEl,dateEl,eventEl];
+let ok=true;
+fields.forEach(f=>{
+f.classList.remove("error");
+if(!f.value){f.classList.add("error");ok=false;}
+});
+if(!ok) return;
 
-  let fields = [nameEl, phoneEl, dateEl, eventEl];
-  let valid = true;
+sendBtn.classList.add("waGlow");
 
-  fields.forEach(f=>{
-    f.classList.remove("error");
-    if(!f.value){
-      f.classList.add("error");
-      valid = false;
-    }
-  });
-
-  if(!valid) return;
-
-  // WhatsApp green glow
-  document.getElementById("sendBtn").classList.add("waGlow");
-
-  let url = `https://wa.me/917879404509?text=
-📍 Subh Marriage Garden%0A
+let url=`https://wa.me/917879404509?text=
 👤 Name: ${encodeURIComponent(nameEl.value)}%0A
 📞 Phone: ${encodeURIComponent(phoneEl.value)}%0A
-📅 Event Date: ${encodeURIComponent(dateEl.value)}%0A
+📅 Date: ${encodeURIComponent(dateEl.value)}%0A
 🎉 Event: ${encodeURIComponent(eventEl.value)}%0A
-📝 Details: ${encodeURIComponent(msgEl.value)}`;
+📝 ${encodeURIComponent(msgEl.value)}`;
 
-  window.open(url, "_blank");
-  }
+window.open(url,"_blank");
+}
 
 let hindi=false;
 function toggleLang(){
 hindi=!hindi;
+
 title.innerText=hindi?"शुभ मैरिज गार्डन":"Subh Marriage Garden";
 tagline.innerText=hindi?"शादियों के लिए प्रीमियम स्थल":"A Premium Venue for Weddings";
-aboutTitle.innerText=hindi?"हमारे बारे में":"About Us";
-aboutText.innerText=hindi?"शुभ मैरिज गार्डन एक भव्य आयोजन स्थल है।":
-"Subh Marriage Garden is a modern, elegant venue.";
-contactText.innerText=hindi?
-"📞 संपर्क: +91 78794 04509, 9526743880":
-"📞 Contact: +91 78794 04509, 9526743880";
+formTitle.innerText=hindi?"बुकिंग / पूछताछ":"Booking / Enquiry";
+mapTitle.innerText=hindi?"लोकेशन":"Location";
+
+footerTitle.innerText=hindi?"शुभ मैरिज गार्डन":"Subh Marriage Garden";
+footerAbout.innerText=hindi?
+"शादियों और भव्य आयोजनों के लिए एक प्रीमियम स्थल।":
+"A premium venue for weddings, receptions and grand celebrations.";
+footerAddress.innerText=hindi?
+"📍 भारत, मध्य प्रदेश, जबलपुर, सुहागी":
+"📍 India, Madhya Pradesh, Jabalpur, Suhagi";
+footerContact.innerText="📞 +91 78794 04509 | 9526743880";
+footerCopy.innerText=hindi?
+"© 2026 शुभ मैरिज गार्डन. सर्वाधिकार सुरक्षित।":
+"© 2026 Subh Marriage Garden. All Rights Reserved.";
+
 mapEn.style.display=hindi?"none":"block";
 mapHi.style.display=hindi?"block":"none";
 }
